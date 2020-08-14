@@ -13,7 +13,7 @@ public class Husky extends Critter {
    
    private Random rand;
    
-   private int random;
+   //private int random;
    
    private static int deaths;
    
@@ -42,7 +42,6 @@ public class Husky extends Critter {
                (getNeighbor(Direction.WEST).equals(".") ||
                getNeighbor(Direction.WEST).equals(" ") ||
                getNeighbor(Direction.WEST).equals("S"))) {
-            
          return true; 
       } else if (random == 1) {
          return true;
@@ -61,11 +60,8 @@ public class Husky extends Critter {
             opponent.equals("3") || opponent.equals("2") ||
             opponent.equals("1") || opponent.equals("%")) {
             return Attack.SCRATCH;
-         } else if (opponent.equals("S")) {
-            return Attack.POUNCE;
-         } else {
-            return Attack.POUNCE;
          }
+         return Attack.POUNCE;
 
       } else if (births - deaths < 4) {
          if (random == 1) {
@@ -87,22 +83,22 @@ public class Husky extends Critter {
       } else {
          return Attack.SCRATCH;
       }
-	}
+   }
 
-	public Color getColor() {
+   public Color getColor() {
       return Color.PINK;
 
-	}
+   }
 
-	public String toString() {
+   public String toString() {
       return "S";
-	}
+   }
    
    public Direction getMove() {
       if (births - deaths > 10) {
          if (!getNeighbor(Direction.NORTH).equals(" ") &&
                !getNeighbor(Direction.NORTH).equals("S") &&
-               !getNeighbor(Direction.SOUTH).equals(".")) {
+               !getNeighbor(Direction.NORTH).equals(".")) {
             return Direction.NORTH;
          } else if (!getNeighbor(Direction.EAST).equals(" ") &&
                !getNeighbor(Direction.EAST).equals("S") &&
@@ -119,7 +115,7 @@ public class Husky extends Critter {
          } else {
             if (moves == 5) {
                moves = 0;
-               random = rand.nextInt(4) + 1;
+               int random = rand.nextInt(4) + 1;
             }
             moves++;  
             if (random == 1) {
@@ -135,7 +131,7 @@ public class Husky extends Critter {
       }
       if (moves == 5) {
          moves = 0;
-         random = rand.nextInt(4) + 1;
+         int random = rand.nextInt(4) + 1;
       }
       moves++;  
       if (random == 1) {
