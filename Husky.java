@@ -52,7 +52,6 @@ public class Husky extends Critter {
    
    public Attack fight(String opponent) {
       int random = rand.nextInt(3) + 1;
-      
       if (births - deaths < 10) {
          if (opponent.equals("9") || opponent.equals("8") ||
             opponent.equals("7") || opponent.equals("6") || 
@@ -95,6 +94,7 @@ public class Husky extends Critter {
    }
    
    public Direction getMove() {
+      int random = rand.nextInt(4) + 1;
       if (births - deaths > 10) {
          if (!getNeighbor(Direction.NORTH).equals(" ") &&
                !getNeighbor(Direction.NORTH).equals("S") &&
@@ -112,26 +112,10 @@ public class Husky extends Critter {
                !getNeighbor(Direction.WEST).equals("S") &&
                !getNeighbor(Direction.WEST).equals(".")) {
             return Direction.WEST;
-         } else {
-            if (moves == 5) {
-               moves = 0;
-               int random = rand.nextInt(4) + 1;
-            }
-            moves++;  
-            if (random == 1) {
-               return Direction.NORTH;
-            } else if (random == 2) {
-               return Direction.EAST;
-            } else if (random == 3) {
-               return Direction.SOUTH;
-            } else {
-               return Direction.WEST;
-            }   
-         }  
+         } 
       }
       if (moves == 5) {
          moves = 0;
-         int random = rand.nextInt(4) + 1;
       }
       moves++;  
       if (random == 1) {
