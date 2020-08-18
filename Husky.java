@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Husky extends Critter {
    
-   private int moves;
+   //private int moves;
    
    private Random rand;
    
@@ -30,18 +30,10 @@ public class Husky extends Critter {
       int random = rand.nextInt(3) + 1;
       if (births - deaths > 20) {
          return true;
-      } else if ((getNeighbor(Direction.NORTH).equals(".") ||
-               getNeighbor(Direction.NORTH).equals(" ") ||
-               getNeighbor(Direction.NORTH).equals("S")) &&
-               (getNeighbor(Direction.EAST).equals(".") ||
-               getNeighbor(Direction.EAST).equals(" ") ||
-               getNeighbor(Direction.EAST).equals("S")) &&
-               (getNeighbor(Direction.SOUTH).equals(".") ||
-               getNeighbor(Direction.SOUTH).equals(" ") ||
-               getNeighbor(Direction.SOUTH).equals("S")) &&
-               (getNeighbor(Direction.WEST).equals(".") ||
-               getNeighbor(Direction.WEST).equals(" ") ||
-               getNeighbor(Direction.WEST).equals("S"))) {
+      } else if (checkNeighbors(Direction.NORTH) && 
+                 checkNeighbors(Direction.EAST) &&
+                 checkNeighbors(Direction.SOUTH) &&
+                 checkNeighbors(Direction.WEST)) {
          return true; 
       } else if (random == 1) {
          return true;
@@ -53,16 +45,18 @@ public class Husky extends Critter {
    public Attack fight(String opponent) {
       int random = rand.nextInt(3) + 1;
       if (births - deaths < 10) {
-         if (opponent.equals("9") || opponent.equals("8") ||
-            opponent.equals("7") || opponent.equals("6") || 
-            opponent.equals("5") || opponent.equals("4") ||
-            opponent.equals("3") || opponent.equals("2") ||
-            opponent.equals("1") || opponent.equals("%")) {
+         for (int i = 1; i < 10; i++) {
+            if (opponent.equals("" + i)) {
+               return Attack.SCRATCH;
+            }
+         }
+         if (opponent.equals("%")) {
             return Attack.SCRATCH;
          }
          return Attack.POUNCE;
-
-      } else if (births - deaths < 4) {
+      }
+      
+      if (births - deaths < 4) {
          if (random == 1) {
             return Attack.SCRATCH;
          } else if (random == 2) {
@@ -86,7 +80,6 @@ public class Husky extends Critter {
 
    public Color getColor() {
       return Color.PINK;
-
    }
 
    public String toString() {
@@ -96,28 +89,20 @@ public class Husky extends Critter {
    public Direction getMove() {
       int random = rand.nextInt(4) + 1;
       if (births - deaths > 10) {
-         if (!getNeighbor(Direction.NORTH).equals(" ") &&
-               !getNeighbor(Direction.NORTH).equals("S") &&
-               !getNeighbor(Direction.NORTH).equals(".")) {
+         if (!checkNeighbors(Direction.NORTH)) {
             return Direction.NORTH;
-         } else if (!getNeighbor(Direction.EAST).equals(" ") &&
-               !getNeighbor(Direction.EAST).equals("S") &&
-               !getNeighbor(Direction.EAST).equals(".")) {
+         } else if (!checkNeighbors(Direction.EAST)) {
             return Direction.EAST;
-         } else if (!getNeighbor(Direction.SOUTH).equals(" ") &&
-               !getNeighbor(Direction.SOUTH).equals("S") && 
-               !getNeighbor(Direction.SOUTH).equals(".")) {
+         } else if (!checkNeighbors(Direction.SOUTH)) {
             return Direction.SOUTH;
-         } else if (!getNeighbor(Direction.WEST).equals(" ") &&
-               !getNeighbor(Direction.WEST).equals("S") &&
-               !getNeighbor(Direction.WEST).equals(".")) {
+         } else if (!checkNeighbors(Direction.WEST)) {
             return Direction.WEST;
          } 
       }
-      if (moves == 5) {
+      /*if (moves == 5) {
          moves = 0;
       }
-      moves++;  
+      moves++;*/  
       if (random == 1) {
          return Direction.NORTH;
       } else if (random == 2) {
@@ -129,6 +114,12 @@ public class Husky extends Critter {
       }   
    }
    
+   private boolean checkNeighbors(Direction dir) {
+      return (getNeighbor(dir).equals(".") ||
+              getNeighbor(dir).equals(" ") ||
+              getNeighbor(dir).equals("S"))
+   }
+      
    public void lose() {
       deaths++;
    }
